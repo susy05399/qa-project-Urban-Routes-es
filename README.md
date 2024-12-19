@@ -1,12 +1,12 @@
 Proyecto de Automatización de Solicitud de Taxi Comfort
 
-Datos del creador:
+*Datos del creador:*
 
 - Nombre: Susana Pérez Aparicio
 
 - Grupo: No. 17
 
-Instalación:
+*Pasos para ejecutar el código:*
 
 - Inicia sesión y conéctate a GitHub.
 - Clona el repositorio en tu computadora.
@@ -15,26 +15,29 @@ Instalación:
 - Si no cuentas con Google Chrome en tu computadora, procede a instalarlo.
 - Ejecuta las pruebas de la aplicación Urban Routes con el siguiente comando bash:
 
-pytest /sprint_8/test.py
+      pytest /sprint_8/test.py
 
-Herramientas de uso:
+    O tambien por el contrario, puedes ejecutarlo desde PyCharm entrando a la carpeta de "test.py", dando clic en "Current File"
+en la "v", seleccionando la flecha verde (Run 'test.py'') de la sección Current File.
+
+*Herramientas de uso:*
 
 - GitHub
 - PyCharm
 - Plataforma de TripleTen (enlace al servidor privado)
 - GoogleChrome
 
-Funcionalidad:
+*Funcionalidad:*
 
 Este proyecto se centra en la automatización del proceso de solicitud de un taxi con la tarifa Comfort. Incluye un conjunto de pruebas para verificar la correcta implementación del proceso.
 
-Archivos del proyecto:
+*Archivos del proyecto:*
 
 - data.py: Contiene los valores de prueba que se utilizan en las pruebas automatizadas.
 - locators.py: Define los localizadores necesarios para la automatización.
 - method.py: Proporciona los métodos auxiliares usados en las pruebas.
 
-Pruebas de automatización:
+*Pruebas de automatización:*
 
 El proyecto se divide en un total de 8 pruebas automatizadas, cada una abordando diferentes aspectos del proceso:
 
@@ -47,11 +50,20 @@ El proyecto se divide en un total de 8 pruebas automatizadas, cada una abordando
 - def test_call_taxi(self): Realiza la solicitud del taxi y verifica que la orden se haya ejecutado correctamente.
 - def test_wait_driver_details(self): Verifica la recepción de los detalles del conductor y que el viaje haya sido aceptado.
 
-Para realizar la ejecución de las pruebas:
+*Para realizar la ejecución de las pruebas:*
 
 1. Asegúrate de tener configurado e instalado Python.
-2. Tener instalado Selenium.
+2. Tener instalado Selenium. 
+    
+   
+- Para instalar Selenium lo puedes hacer desde la terminal usando el siguiente código: 
+
+       pip install selenium
 3. Instalar y ejecutar las pruebas con Pytest.
+
+- Para instalar Pytest lo puedes hacer desde la terminal usando el siguiente código:
+
+        pip install pytest
 
 Nota: Las pruebas se realizan sobre Google Chrome. Asegúrate de tener la versión adecuada de Google Chrome Driver (la más reciente). 
 
