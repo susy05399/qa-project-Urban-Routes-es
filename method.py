@@ -2,10 +2,11 @@ from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions
-import data
+from selenium.webdriver.support import expected_conditions as EC
 import time
+import data
 import locators
+
 
 # no modificar
 def retrieve_phone_code(driver) -> str:
@@ -40,126 +41,100 @@ class UrbanRoutesPage:
         self.driver = driver
 
     def set_from(self, address_from):
-        self.driver.find_element(*locators.UrbanRoutesPage.from_field).send_keys(data.address_from)
-        time.sleep(1)
+        from_field = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(locators.UrbanRoutesPage.from_field))
+        from_field.clear()
+        from_field.send_keys(address_from)
 
     def set_to(self, to_address):
-        self.driver.find_element(*locators.UrbanRoutesPage.to_field).send_keys(data.address_to)
-        time.sleep(1)
-
-    def get_from(self):
-        return self.driver.find_element(*locators.UrbanRoutesPage.from_field).get_property('value')
-
-    def get_to(self):
-        return self.driver.find_element(*locators.UrbanRoutesPage.to_field).get_property('value')
+        to_field = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(locators.UrbanRoutesPage.to_field))
+        to_field.clear()
+        to_field.send_keys(to_address)
 
     def request_taxi(self):
-        WebDriverWait(self.driver, 3).until(
-            expected_conditions.element_to_be_clickable(locators.UrbanRoutesPage.taxi_button))
-        self.driver.find_element(*locators.UrbanRoutesPage.taxi_button).click()
-        time.sleep(1)
+        taxi_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.taxi_button))
+        taxi_button.click()
 
     def pick_comfort(self):
-        WebDriverWait(self.driver, 3).until(
-            expected_conditions.element_to_be_clickable(locators.UrbanRoutesPage.comfort))
-        self.driver.find_element(*locators.UrbanRoutesPage.comfort).click()
-        time.sleep(1)
-
-    def get_comfort_status(self):
-        return self.driver.find_element(*locators.UrbanRoutesPage.comfort).is_enabled()
+        comfort_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.comfort))
+        comfort_button.click()
 
     def set_phone_number(self):
-        self.driver.find_element(*locators.UrbanRoutesPage.phone_field).click()
+        phone_field = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.phone_field))
+        phone_field.click()
 
-        WebDriverWait(self.driver, 3).until(
-            expected_conditions.visibility_of_element_located(locators.UrbanRoutesPage.phone_field_popup))
+        phone_popup = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(locators.UrbanRoutesPage.phone_field_popup))
+        phone_popup.clear()
+        phone_popup.send_keys(data.phone_number)
 
-        self.driver.find_element(*locators.UrbanRoutesPage.phone_field_popup).send_keys(data.phone_number)
-        time.sleep(1)
+        phone_submit_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.phone_summit_button))
+        phone_submit_button.click()
 
-        self.driver.find_element(*locators.UrbanRoutesPage.phone_summit_button).click()
-        time.sleep(1)
+        code_field = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(locators.UrbanRoutesPage.code_field))
+        code_field.clear()
+        code_field.send_keys(retrieve_phone_code(self.driver))
 
-        self.driver.find_element(*locators.UrbanRoutesPage.code_field).send_keys(retrieve_phone_code(self.driver))
-        time.sleep(1)
-
-        WebDriverWait(self.driver, 3).until(
-            expected_conditions.element_to_be_clickable(locators.UrbanRoutesPage.code_summit_button))
-
-        self.driver.find_element(*locators.UrbanRoutesPage.code_summit_button).click()
-        time.sleep(3)
-
-    def get_phone_number(self):
-        return self.driver.find_element(*locators.UrbanRoutesPage.phone_field_text).text
+        code_submit_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.code_summit_button))
+        code_submit_button.click()
 
     def set_payment(self):
-        WebDriverWait(self.driver, 3).until(
-            expected_conditions.element_to_be_clickable(locators.UrbanRoutesPage.payment_method_field))
+        payment_method_field = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.payment_method_field))
+        payment_method_field.click()
 
-        self.driver.find_element(*locators.UrbanRoutesPage.payment_method_field).click()
-        time.sleep(1)
+        add_card_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.add_card))
+        add_card_button.click()
 
-        self.driver.find_element(*locators.UrbanRoutesPage.add_card).click()
-        time.sleep(1)
+        card_number_field = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located(locators.UrbanRoutesPage.card_number_field))
+        card_number_field.clear()
+        card_number_field.send_keys(data.card_number)
 
-        self.driver.find_element(*locators.UrbanRoutesPage.card_number_field).send_keys(data.card_number)
+        card_code_field = WebDriverWait(self.driver, 10).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "input.card-input#code")))  # Usando CSS Selector
+        card_code_field.clear()
+        card_code_field.send_keys(data.card_code)
 
-        WebDriverWait(self.driver, 3).until(
-            expected_conditions.element_to_be_clickable(locators.UrbanRoutesPage.card_number_field))
+        blank_field = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.card_blank_field))
+        blank_field.click()
 
-        self.driver.find_element(*locators.UrbanRoutesPage.card_code_field).send_keys(data.card_code)
-        time.sleep(1)
+        card_submit_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.card_summit_button))
+        card_submit_button.click()
 
-        self.driver.find_element(*locators.UrbanRoutesPage.card_blank_field).click()
-        time.sleep(1)
-
-        self.driver.find_element(*locators.UrbanRoutesPage.card_summit_button).click()
-        time.sleep(1)
-
-        self.driver.find_element(*locators.UrbanRoutesPage.payment_method_close_button).click()
-        time.sleep(1)
-
-    def get_payment(self):
-        return self.driver.find_element(*locators.UrbanRoutesPage.pp_value_text).text
-
-
-    def set_message(self):
-        WebDriverWait(self.driver, 3).until(
-            expected_conditions.element_to_be_clickable(locators.UrbanRoutesPage.comment_field))
-
-        self.driver.find_element(*locators.UrbanRoutesPage.comment_field).send_keys(data.message_for_driver)
-        time.sleep(1)
-
-    def get_message(self):
-        return self.driver.find_element(*locators.UrbanRoutesPage.comment_field).get_attribute('value')
+        close_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.payment_method_close_button))
+        close_button.click()
 
     def set_requirements(self):
-        #Open requirements
-        self.driver.find_element(*locators.UrbanRoutesPage.requirements_dropdown).click()
-        time.sleep(1)
-        self.driver.find_element(*locators.UrbanRoutesPage.requirements_dropdown).click()
-        #Manta y pan;uelos
-        time.sleep(1)
-        self.driver.find_element(*locators.UrbanRoutesPage.manta_panuelos_slider).click()
-        time.sleep(1)
-        #Pendiente ingresar asserts para verificar que el slide esta activo y el hlado se haya agregado
-        self.driver.find_element(*locators.UrbanRoutesPage.helado_plus_button).click()
-        time.sleep(1)
-        self.driver.find_element(*locators.UrbanRoutesPage.helado_plus_button).click()
-        time.sleep(1)
+        dropdown = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.requirements_dropdown))
+        dropdown.click()
 
-    def get_helado_counter(self):
-        return self.driver.find_element(*locators.UrbanRoutesPage.helado_counter_value_2).text
+        manta_panuelos_slider = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.manta_panuelos_slider))
+        manta_panuelos_slider.click()
 
-    def get_slider_status(self):
-        return self.driver.find_element(*locators.UrbanRoutesPage.manta_panuelos_check).is_selected()
+        helado_plus_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.helado_plus_button))
+        helado_plus_button.click()
+        helado_plus_button.click()
 
     def call_taxi(self):
-        self.driver.find_element(*locators.UrbanRoutesPage.call_taxi_button).click()
+        call_taxi_button = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(locators.UrbanRoutesPage.call_taxi_button))
+        call_taxi_button.click()
 
     def wait_driver_details(self):
         WebDriverWait(self.driver, 30).until(
-            expected_conditions.visibility_of_element_located(locators.UrbanRoutesPage.driver_order_details))
-
-    def get_order_header_title(self):
-        return self.driver.find_element(*locators.UrbanRoutesPage.order_header_title).text
+            EC.visibility_of_element_located(locators.UrbanRoutesPage.driver_order_details))
