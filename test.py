@@ -13,7 +13,6 @@ from selenium.webdriver import DesiredCapabilities
 from data import phone_number, message_for_driver
 from method import UrbanRoutesPage
 
-
 class TestUrbanRoutes:
 
     driver = None
