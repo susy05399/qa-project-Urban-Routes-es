@@ -3,8 +3,8 @@ Proyecto de Automatización de Solicitud de Taxi Comfort
 *Datos del creador:*
 
 - Nombre: Susana Pérez Aparicio
-
-- Grupo: No. 17
+- perezapariciosusana@gmail.com
+- Mexico city
 
 *Pasos para ejecutar el código:*
 
